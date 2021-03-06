@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import api from 'api';
+import Card from 'components/atoms/Card';
 
 function App() {
   const [todos, setTodos] = useState<Api.Todo[]>();
@@ -13,12 +14,13 @@ function App() {
 
   return (
     <div>
-      <h1>あいうえお</h1>
       {todos?.map((todo) => (
-        <>
-          <p>{todo.id}</p>
-          <p>{todo.title}</p>
-        </>
+        <Card
+          title={todo.title}
+          priority={todo.priority}
+          is_done={todo.is_done}
+          due_date={todo.due_date}
+        />
       ))}
     </div>
   );

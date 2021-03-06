@@ -1,0 +1,43 @@
+p {
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  width: 100%;
+  color: #eee;
+  margin-bottom: 1px;
+
+  .contents {
+    padding: 5px;
+  }
+
+  &.done {
+    background-color: #111;
+  }
+
+  &.not_done {
+    background-color: #333;
+  }
+
+  &.priority_high {
+    border-left: solid #f00 10px;
+  }
+
+  &.priority_medium {
+    border-left: solid #ff0 10px;
+  }
+
+  &.priority_low {
+    border-left: solid #0f0 10px;
+  }
+
+  &.priority_none {
+    padding-left: 10px;
+  }
+
+  &:hover {
+    background-color: #444;
+  }
+}
+
