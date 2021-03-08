@@ -7,9 +7,10 @@ p {
   width: 100%;
   color: #eee;
   margin-bottom: 1px;
+  box-sizing: border-box;
 
   .contents {
-    padding: 5px;
+    padding: 5px 10px;
   }
 
   &.done {
@@ -22,19 +23,19 @@ p {
   }
 
   &.priority_high {
-    border-left: solid #f00 10px;
+    border-left: solid #f00 5px;
   }
 
   &.priority_medium {
-    border-left: solid #ff0 10px;
+    border-left: solid #ff0 5px;
   }
 
   &.priority_low {
-    border-left: solid #0f0 10px;
+    border-left: solid #0f0 5px;
   }
 
   &.priority_none {
-    padding-left: 10px;
+    padding-left: 5px;
   }
 
   &:hover {
