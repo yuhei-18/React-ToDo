@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from "clsx";
-import moment from 'moment'
+import moment from 'moment';
 import styles from './styles.module.scss';
 
 const TITLE_MAX_LENGTH = 15;

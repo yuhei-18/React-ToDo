@@ -5,7 +5,7 @@ import Card from "components/atoms/Card";
 import LeftMenu from "components/atoms/LeftMenu";
 import Contents from "components/atoms/Contants";
 import Detail from "components/pages/todos/Detail";
-import 'scss/_reset.module.scss';
+import 'scss/_reset.scss';
 import styles from './styles.module.scss';
 
 function App() {

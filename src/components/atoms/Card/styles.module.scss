@@ -1,3 +1,5 @@
+@import 'src/scss/variables';
+
 p {
   padding: 0;
   margin: 0;
@@ -5,8 +7,8 @@ p {
 
 .card {
   width: 100%;
-  color: #eee;
-  margin-bottom: 1px;
+  color: $color-font;
+  margin-bottom: 2px;
   box-sizing: border-box;
   height: 85px;
 
@@ -29,17 +31,17 @@ p {
     }
 
     .ago {
-      color: #F00;
+      color: #f00;
     }
   }
 
   &.done {
-    background-color: #282828;
+    background-color: #222;
     color: #888
   }
 
   &.not_done {
-    background-color: #333;
+    background-color: $color-background;
   }
 
   &.priority_high {
