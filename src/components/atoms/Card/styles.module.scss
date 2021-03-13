@@ -8,9 +8,29 @@ p {
   color: #eee;
   margin-bottom: 1px;
   box-sizing: border-box;
+  height: 85px;
 
   .contents {
     padding: 5px 10px;
+
+    .title {
+      margin: 5px 0 5px;
+    }
+
+    .content {
+      font-size: 0.75em;
+      margin-bottom: 8px;
+      color: #bbb;
+      height: 24px;
+    }
+
+    .date {
+      font-size: 0.8em;
+    }
+
+    .ago {
+      color: #F00;
+    }
   }
 
   &.done {

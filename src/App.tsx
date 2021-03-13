@@ -31,6 +31,7 @@ function App() {
             >
               <Card
                 title={todo.title}
+                content={todo.content}
                 priority={todo.priority}
                 is_done={todo.is_done}
                 due_date={todo.due_date}
