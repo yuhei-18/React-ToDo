@@ -1,4 +1,6 @@
 .left_menu {
+  overflow: scroll;
+  max-height: 100vh;
   width: 25%;
   box-sizing: border-box;
 }

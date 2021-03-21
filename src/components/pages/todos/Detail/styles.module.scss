@@ -3,9 +3,7 @@
 .todos {
   color: $color-font;
   background-color: $color-background;
-  margin-left: 2px;
-  padding: 80px 50px 0;
-  height: 100%;
+  padding: 80px 50px 30px;
 
   .title {
     margin-bottom: 10px;
@@ -16,25 +14,29 @@
     margin-bottom: 60px;
 
     .priority {
-      &.priority_high {
+      .priority_high {
         color: #f00;
       }
 
-      &.priority_medium {
+      .priority_medium {
         color: #ff0;
       }
 
-      &.priority_low {
+      .priority_low {
         color: #0f0;
       }
 
-      &.priority_none {
+      .priority_none {
         color: $color-font;
       }
     }
 
     .due_date {
       margin-left: 30px;
+    }
+
+    .ago {
+      color: #f00;
     }
   }
 
