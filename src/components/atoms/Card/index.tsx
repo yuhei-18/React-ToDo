@@ -14,10 +14,11 @@ interface PropsType extends Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {
   due_date?: Date;
   priority?: 0 | 1 | 2 | 3;
   is_done?: boolean;
+  choice?: boolean;
 }
 
 const Card = React.forwardRef<Ref, PropsType>((props, ref) => {
-  const { title, content, due_date, priority = 0, is_done, className, ...rest } = props
+  const { title, content, due_date, priority = 0, is_done, choice, className, ...rest } = props
   const now = moment();
 
   return (
@@ -31,6 +32,7 @@ const Card = React.forwardRef<Ref, PropsType>((props, ref) => {
         [styles.priority_medium]: priority === 2,
         [styles.priority_low]: priority === 1,
         [styles.priority_none]: priority === 0,
+        [styles.choice]: choice === true,
       })}
     >
       <div className={styles.contents}>

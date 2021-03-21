@@ -63,5 +63,9 @@ p {
   &:hover {
     background-color: #444;
   }
+
+  &.choice {
+    background-color: rgba(0, 144, 255, 0.5);
+  }
 }
 

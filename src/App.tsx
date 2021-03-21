@@ -35,6 +35,7 @@ function App() {
                 priority={todo.priority}
                 is_done={todo.is_done}
                 due_date={todo.due_date}
+                choice={todo.id === todoId}
               />
             </Link>
           ))}
