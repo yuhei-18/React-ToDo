@@ -4,6 +4,7 @@ import api from "api";
 import Card from "components/atoms/Card";
 import LeftMenu from "components/atoms/LeftMenu";
 import Contents from "components/atoms/Contants";
+import Header from "components/atoms/Header";
 import Detail from "components/pages/todos/Detail";
 import 'scss/_reset.scss';
 import styles from './styles.module.scss';
@@ -42,6 +43,8 @@ function App() {
         </LeftMenu>
 
         <Contents>
+          <Header>
+          </Header>
           <Switch>
             <Route path="/" exact>
               <Redirect to={`/todo/detail/${todoId}`} />
