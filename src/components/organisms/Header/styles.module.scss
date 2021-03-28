@@ -1,0 +1,21 @@
+@import '../../../scss/variables';
+
+.header {
+  height: 50px;
+  width: 100%;
+  border-bottom: solid 2px #181818;
+  background-color: $color-background;
+  position: fixed;
+  z-index: 20;
+}
+
+.create_icon {
+  margin: 10px 0 0 10px;
+  height: 30px;
+  width: 30px;
+  color: #444;
+
+  &:hover {
+    color: #666;
+  }
+}

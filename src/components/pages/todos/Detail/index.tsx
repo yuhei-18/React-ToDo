@@ -32,12 +32,12 @@ const Detail: React.FC<PropsType> = (props) => {
           <span className={clsx({
             [styles.ago]: todo?.due_date && moment(todo?.due_date) < now
           })}>
-            {moment(todo?.due_date).format("YYYY年 M月 DD日 dddd LT")}
+            {moment(todo?.due_date).format("ll")}
           </span>
         </p>
       </div>
       <p className={styles.updated_at}>
-        最終更新日：{moment(todo?.updated_at).format("YYYY年 M月 DD日 dddd LT")}
+        updated {moment(todo?.updated_at).fromNow()}
       </p>
       <p>{todo?.content}</p>
     </div>

@@ -4,8 +4,9 @@ import api from "api";
 import Card from "components/atoms/Card";
 import LeftMenu from "components/atoms/LeftMenu";
 import Contents from "components/atoms/Contants";
-import Header from "components/atoms/Header";
+import Header from "components/organisms/Header";
 import Detail from "components/pages/todos/Detail";
+import Create from "components/pages/todos/Create";
 import 'scss/_reset.scss';
 import styles from './styles.module.scss';
 
@@ -43,18 +44,23 @@ function App() {
         </LeftMenu>
 
         <Contents>
-          <Header>
-          </Header>
-          <Switch>
-            <Route path="/" exact>
-              <Redirect to={`/todo/detail/${todoId}`} />
-            </Route>
-            <Route path="/todo/detail/:id">
-              <Detail
-                todo={todos ? todos[todoId -1] : undefined}
-              />
-            </Route>
-          </Switch>
+          <Header />
+
+          <div className={styles.position}>
+            <Switch>
+              <Route path="/" exact>
+                <Redirect to={`/todo/detail/${todoId}`} />
+              </Route>
+              <Route path="/todo/detail/:id">
+                <Detail
+                  todo={todos ? todos[todoId -1] : undefined}
+                />
+              </Route>
+              <Route path="/todo/create">
+                <Create />
+              </Route>
+            </Switch>
+          </div>
         </Contents>
       </div>
     </>
