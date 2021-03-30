@@ -6,8 +6,8 @@ const todo = {
     return response.data;
   },
 
-  get: async (id: number): Promise<Api.Todo> => {
-    const response = await axios.get(`todos/${id}`);
+  post: async (data: object): Promise<Api.Todo> => {
+    const response = await axios.post(`todos`, data);
     return response.data;
   },
 };

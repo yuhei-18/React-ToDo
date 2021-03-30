@@ -53,7 +53,9 @@ function App() {
               </Route>
               <Route path="/todo/detail/:id">
                 <Detail
-                  todo={todos ? todos[todoId -1] : undefined}
+                  todo={todos ? todos.find((todo) => {
+                    return (todo.id === todoId);
+                  }) : undefined}
                 />
               </Route>
               <Route path="/todo/create">

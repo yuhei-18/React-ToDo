@@ -2,13 +2,31 @@ import React from 'react';
 import { useForm, Controller } from "react-hook-form";
 import clsx from "clsx";
 import styles from "components/pages/todos/Create/styles.module.scss";
+import api from "api";
+
+type TodoCreateType = {
+  title: string;
+  content: string;
+  priority: number;
+  due_date: Date;
+}
 
 const Create: React.FC = () => {
-  const { handleSubmit, control, errors } = useForm();
+  const { handleSubmit, control, errors } = useForm<TodoCreateType>();
+
+  function TodoCreate(inputs: TodoCreateType) {
+    const reqInput = inputs;
+    reqInput.priority = Number(inputs.priority);
+    api.todo.post(reqInput).then((res) => {
+      console.info(res);
+    }).catch((e) => {
+      console.error(e);
+    })
+  }
 
   return (
     <div className={styles.create}>
-      <form onSubmit={handleSubmit(() => {})}>
+      <form onSubmit={handleSubmit(TodoCreate)}>
 
         <div className={styles.head}>
           <h1>ToDo 作成</h1>
@@ -22,8 +40,11 @@ const Create: React.FC = () => {
               name="title"
               control={control}
               defaultValue=""
-              render={() =>
-                <input type="text" className={clsx(styles.input, styles.normal)} />
+              as={
+                <input
+                  type="text"
+                  className={clsx(styles.input, styles.normal)}
+                />
               }
             />
           </div>
@@ -34,8 +55,11 @@ const Create: React.FC = () => {
               name="due_date"
               control={control}
               defaultValue=""
-              render={() =>
-                <input type="date" className={clsx(styles.input, styles.normal)} />
+              as={
+                <input
+                  type="date"
+                  className={clsx(styles.input, styles.normal)}
+                />
               }
             />
           </div>
@@ -46,7 +70,7 @@ const Create: React.FC = () => {
               name="priority"
               control={control}
               defaultValue=""
-              render={() =>
+              as={
                 <select className={clsx(styles.input, styles.normal)}>
                   <option value={0}>{""}</option>
                   <option value={1}>低</option>
@@ -61,10 +85,10 @@ const Create: React.FC = () => {
         <div className={styles.contents}>
           <p className={styles.label}>内容</p>
           <Controller
-            name="contents"
+            name="content"
             control={control}
             defaultValue=""
-            render={() =>
+            as={
               <textarea rows={20} className={styles.input} />
             }
           />

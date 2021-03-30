@@ -8,10 +8,7 @@
   .head {
     display: flex;
     justify-content: space-between;
-
-    h1 {
-      padding-bottom: 20px;
-    }
+    margin-bottom: 20px;
   }
 
   .input {
@@ -66,7 +63,7 @@
     border: solid 2px #4fff4f;
     border-radius: 5px;
     padding: 0 30px;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
 
     &:hover {

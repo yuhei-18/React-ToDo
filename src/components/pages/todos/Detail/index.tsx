@@ -39,7 +39,7 @@ const Detail: React.FC<PropsType> = (props) => {
       <p className={styles.updated_at}>
         updated {moment(todo?.updated_at).fromNow()}
       </p>
-      <p>{todo?.content}</p>
+      <p className={styles.content}>{todo?.content}</p>
     </div>
   )
 };
