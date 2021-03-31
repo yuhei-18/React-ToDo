@@ -14,6 +14,8 @@
     margin-bottom: 60px;
 
     .priority {
+      display: flex;
+
       .priority_high {
         color: #f00;
       }
@@ -32,16 +34,23 @@
     }
 
     .due_date {
-      margin-left: 30px;
+      display: flex;
+      margin-left: 20px;
     }
 
     .ago {
       color: #f00;
     }
-  }
 
-  .updated_at {
-    margin-bottom: 30px;
+    .updated_at {
+      display: flex;
+      margin-left: 20px;
+    }
+
+    .icon {
+      height: 100%;
+      margin-right: 3px;
+    }
   }
 
   .content {
