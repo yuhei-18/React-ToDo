@@ -1,14 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { VscDiffAdded } from "react-icons/vsc";
+import { RiAddBoxLine } from "react-icons/ri";
+import { AiFillDelete } from "react-icons/ai";
+import { BiEdit } from "react-icons/bi";
 import styles from "./styles.module.scss";
 
 const Header: React.FC = () => {
   return (
     <div className={styles.header}>
-      <Link to="/todo/create">
-        <VscDiffAdded className={styles.create_icon} />
-      </Link>
+      <div>
+        <Link to="/todo/create">
+          <RiAddBoxLine className={styles.create_icon} />
+        </Link>
+        <BiEdit className={styles.create_icon} />
+      </div>
+
+        <AiFillDelete className={styles.delete_icon} />
     </div>
   )
 }

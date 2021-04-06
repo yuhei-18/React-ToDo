@@ -57,6 +57,12 @@
     }
   }
 
+  .error {
+    color: #f00;
+    font-size: small;
+    margin-top: 4px;
+  }
+
   .submit {
     color: $color-font;
     background-color: $color-background;

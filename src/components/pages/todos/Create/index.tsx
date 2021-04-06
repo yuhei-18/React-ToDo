@@ -1,8 +1,10 @@
 import React from 'react';
 import { useForm, Controller } from "react-hook-form";
+import { ErrorMessage } from '@hookform/error-message';
 import clsx from "clsx";
-import styles from "components/pages/todos/Create/styles.module.scss";
 import api from "api";
+import Required from "components/atoms/Required";
+import styles from "components/pages/todos/Create/styles.module.scss";
 
 type TodoCreateType = {
   title: string;
@@ -35,11 +37,18 @@ const Create: React.FC = () => {
 
         <div className={styles.flex}>
           <div className={styles.title}>
-            <p className={styles.label}>タイトル</p>
+            <p className={styles.label}>タイトル<Required /></p>
             <Controller
               name="title"
               control={control}
               defaultValue=""
+              rules={{
+                required: "タイトルの入力は必須です。",
+                maxLength: {
+                  value: 32,
+                  message: "タイトルの文字数を少なくしてください"
+                }
+              }}
               as={
                 <input
                   type="text"
@@ -47,6 +56,9 @@ const Create: React.FC = () => {
                 />
               }
             />
+            <div className={styles.error}>
+              <ErrorMessage name="title" errors={errors} />
+            </div>
           </div>
 
           <div className={styles.date}>
@@ -69,7 +81,7 @@ const Create: React.FC = () => {
             <Controller
               name="priority"
               control={control}
-              defaultValue=""
+              defaultValue=""　
               as={
                 <select className={clsx(styles.input, styles.normal)}>
                   <option value={0}>{""}</option>
@@ -83,15 +95,25 @@ const Create: React.FC = () => {
         </div>
 
         <div className={styles.contents}>
-          <p className={styles.label}>内容</p>
+          <p className={styles.label}>内容<Required /></p>
           <Controller
             name="content"
             control={control}
             defaultValue=""
+            rules={{
+              required: "内容の入力は必須です。",
+              maxLength: {
+                value: 2048,
+                message: "内容の文字数を少なくしてください。"
+              }
+            }}
             as={
-              <textarea rows={20} className={styles.input} />
+              <textarea rows={18} className={styles.input} />
             }
           />
+          <div className={styles.error}>
+            <ErrorMessage name="content" errors={errors} />
+          </div>
         </div>
 
       </form>
