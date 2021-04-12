@@ -18,7 +18,7 @@ function App() {
     api.todo.getAll().then((res) => {
       setTodos(res);
     })
-  }, [setTodos])
+  }, [])
 
   return (
     <>

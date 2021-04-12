@@ -1,9 +1,12 @@
 import React from 'react';
 import { useForm, Controller } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
+import { store } from "react-notifications-component";
 import clsx from "clsx";
 import api from "api";
 import Required from "components/atoms/Required";
+import 'animate.css/animate.min.css';
+import 'animate.css/animate.compat.css'
 import styles from "components/pages/todos/Create/styles.module.scss";
 
 type TodoCreateType = {
@@ -14,15 +17,38 @@ type TodoCreateType = {
 }
 
 const Create: React.FC = () => {
-  const { handleSubmit, control, errors } = useForm<TodoCreateType>();
+  const { handleSubmit, control, errors, reset } = useForm<TodoCreateType>();
 
   function TodoCreate(inputs: TodoCreateType) {
     const reqInput = inputs;
     reqInput.priority = Number(inputs.priority);
     api.todo.post(reqInput).then((res) => {
-      console.info(res);
+      store.addNotification({
+        title: "SUCCESS",
+        message: `ToDo「${res.title}」を作成しました。`,
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__zoomIn"],
+        animationOut: ["animate__animated", "animate__zoomOut"],
+        dismiss: {
+          duration: 5000,
+        }
+      })
+      reset();
     }).catch((e) => {
-      console.error(e);
+      store.addNotification({
+        title: "Error",
+        message: `${e}`,
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__zoomIn"],
+        animationOut: ["animate__animated", "animate__zoomOut"],
+        dismiss: {
+          duration: 5000,
+        }
+      })
     })
   }
 
