@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import Card from "components/atoms/Card";
@@ -31,9 +31,9 @@ function App() {
   const [todoId, setTodoId] = useState<number>(1);
   const { loading, error, data, refetch } = useQuery(TODO_LIST);
 
-  useEffect(() => {
+  function refetchTodoList() {
     refetch();
-  }, [refetch])
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
@@ -77,7 +77,9 @@ function App() {
                 />
               </Route>
               <Route path="/todo/create">
-                <Create />
+                <Create
+                  refetch={refetchTodoList}
+                />
               </Route>
             </Switch>
           </div>

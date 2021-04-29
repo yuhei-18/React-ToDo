@@ -1,33 +1,69 @@
 import React from 'react';
-import { useForm, Controller } from "react-hook-form";
-import { ErrorMessage } from '@hookform/error-message';
+import {Controller, useForm} from "react-hook-form";
+import {useMutation} from '@apollo/client';
+import gql from 'graphql-tag';
+import {ErrorMessage} from '@hookform/error-message';
 import clsx from "clsx";
-import api from "api";
 import Required from "components/atoms/Required";
-import { Notification } from "lib/notification";
+import {Notification} from "lib/notification";
 import styles from "components/pages/todos/Create/styles.module.scss";
+
+const TODO_CREATE = gql`
+  mutation todoCreate(
+    $input: TodoCreateInput!,
+  ){
+    todoCreate(
+      input: $input,
+    ){
+      todo{
+        title
+      }
+    }
+  }
+`;
 
 type TodoCreateType = {
   title: string;
   content: string;
   priority: number;
-  due_date: Date;
+  due_date: Date | null;
 }
 
-const Create: React.FC = () => {
+type PropsType = {
+  refetch: () => void;
+}
+
+const Create: React.FC<PropsType> = (props: PropsType) => {
+  const { refetch } = props;
+  const [createTodo] = useMutation(TODO_CREATE);
   const { handleSubmit, control, errors, reset } = useForm<TodoCreateType>();
 
   function TodoCreate(inputs: TodoCreateType) {
     const reqInput = inputs;
-    reqInput.priority = Number(inputs.priority);
-    api.todo.post(reqInput).then((res) => {
+
+    if (reqInput.due_date?.toString() === "") {
+      reqInput.due_date = null;
+    }
+
+    createTodo({ variables: { input: {
+      title: reqInput.title,
+      content: reqInput.content,
+      dueDate: reqInput.due_date,
+      priority: Number(reqInput.priority)
+    }}}).then((res) => {
       Notification({
         title: "SUCCESS",
-        message: `ToDo「${res.title}」を作成しました。`,
+        message: `ToDo「${res.data.todoCreate.todo.title}」を作成しました。`,
         type: "success",
       })
+
+      // フォームを空にする。
       reset();
+
+      // Todo リストを再取得する。
+      refetch();
     }).catch((e) => {
+      console.error(e);
       Notification({
         title: "Error",
         message: `${e}`,
