@@ -17,7 +17,11 @@ const Detail: React.FC<PropsType> = (props) => {
   if (!todo) {
     return (
       <div className={styles.todos}>
-        <h3 className={styles.title}>左上のアイコンから Todo を作成してください。</h3>
+        <h3 className={clsx(styles.title, styles.todo_none)}>
+          左の Todo リストを選択してくだい。
+          <br />
+          または、左上のアイコンから Todo を作成してください。
+        </h3>
       </div>
     )
   }

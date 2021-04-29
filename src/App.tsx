@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
 import Card from "components/atoms/Card";
@@ -29,10 +29,14 @@ const TODO_LIST = gql`
 
 function App() {
   const [todoId, setTodoId] = useState<number>(1);
-  const { loading, error, data } = useQuery(TODO_LIST);
+  const { loading, error, data, refetch } = useQuery(TODO_LIST);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch])
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error </p>;
+  if (error) return <p>Error</p>;
 
   return (
     <>
