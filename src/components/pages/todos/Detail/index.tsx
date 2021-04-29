@@ -14,6 +14,14 @@ const Detail: React.FC<PropsType> = (props) => {
   const priority = ["None", "Low", "Medium", "High"];
   const now = moment();
 
+  if (!todo) {
+    return (
+      <div className={styles.todos}>
+        <h3 className={styles.title}>左上のアイコンから Todo を作成してください。</h3>
+      </div>
+    )
+  }
+
   return(
     <div className={styles.todos}>
       <h1 className={styles.title}>{todo?.title}</h1>
