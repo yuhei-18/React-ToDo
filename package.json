@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.3.15",
     "@hookform/error-message": "^0.0.5",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -16,6 +17,7 @@
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
+    "graphql": "^15.5.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
