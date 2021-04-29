@@ -32,9 +32,9 @@ const Detail: React.FC<PropsType> = (props) => {
         <div className={styles.due_date}>
           <MdDateRange className={styles.icon} />
           <p className={clsx({
-            [styles.ago]: todo?.due_date && moment(todo?.due_date) < now
+            [styles.ago]: todo?.dueDate && moment(todo?.dueDate) < now
           })}>
-            {moment(todo?.due_date).format("ll")}
+            {moment(todo?.dueDate).format("ll")}
           </p>
         </div>
         <div className={styles.updated_at}>

@@ -9,7 +9,7 @@ declare namespace Api {
     title: string;
     content: string;
     priority: 0 | 1 | 2 | 3;
-    due_date: Date;
-    is_done: boolean;
+    dueDate: Date;
+    isDone: boolean;
   }
 }

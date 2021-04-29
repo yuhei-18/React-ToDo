@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
-import api from "api";
+import { useQuery, gql } from '@apollo/client';
 import Card from "components/atoms/Card";
 import LeftMenu from "components/atoms/LeftMenu";
 import Contents from "components/atoms/Contants";
@@ -10,21 +10,35 @@ import Create from "components/pages/todos/Create";
 import 'scss/_reset.scss';
 import styles from './styles.module.scss';
 
-function App() {
-  const [todos, setTodos] = useState<Api.Todo[]>();
-  const [todoId, setTodoId] = useState<number>(1);
+const TODO_LIST = gql`
+  query {
+    todo {
+      nodes {
+        id
+        title
+        content
+        dueDate
+        priority
+        isDone
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 
-  useEffect(() => {
-    api.todo.getAll().then((res) => {
-      setTodos(res);
-    })
-  }, [])
+function App() {
+  const [todoId, setTodoId] = useState<number>(1);
+  const { loading, error, data } = useQuery(TODO_LIST);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error </p>;
 
   return (
     <>
       <div className={styles.app}>
         <LeftMenu>
-          {todos?.map((todo) => (
+          {data.todo.nodes?.map((todo: Api.Todo) => (
             <Link
               to={`/todo/detail/${todo.id}`}
               onClick={() => setTodoId(todo.id)}
@@ -35,8 +49,8 @@ function App() {
                 title={todo.title}
                 content={todo.content}
                 priority={todo.priority}
-                is_done={todo.is_done}
-                due_date={todo.due_date}
+                is_done={todo.isDone}
+                due_date={todo.dueDate}
                 choice={todo.id === todoId}
               />
             </Link>
@@ -53,7 +67,7 @@ function App() {
               </Route>
               <Route path="/todo/detail/:id">
                 <Detail
-                  todo={todos ? todos.find((todo) => {
+                  todo={data.todo.nodes ? data.todo.nodes.find((todo: Api.Todo) => {
                     return (todo.id === todoId);
                   }) : undefined}
                 />
