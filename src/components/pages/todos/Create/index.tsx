@@ -1,12 +1,10 @@
 import React from 'react';
 import { useForm, Controller } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
-import { store } from "react-notifications-component";
 import clsx from "clsx";
 import api from "api";
 import Required from "components/atoms/Required";
-import 'animate.css/animate.min.css';
-import 'animate.css/animate.compat.css'
+import { Notification } from "lib/notification";
 import styles from "components/pages/todos/Create/styles.module.scss";
 
 type TodoCreateType = {
@@ -23,31 +21,17 @@ const Create: React.FC = () => {
     const reqInput = inputs;
     reqInput.priority = Number(inputs.priority);
     api.todo.post(reqInput).then((res) => {
-      store.addNotification({
+      Notification({
         title: "SUCCESS",
         message: `ToDo「${res.title}」を作成しました。`,
         type: "success",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__zoomIn"],
-        animationOut: ["animate__animated", "animate__zoomOut"],
-        dismiss: {
-          duration: 5000,
-        }
       })
       reset();
     }).catch((e) => {
-      store.addNotification({
+      Notification({
         title: "Error",
         message: `${e}`,
         type: "danger",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__zoomIn"],
-        animationOut: ["animate__animated", "animate__zoomOut"],
-        dismiss: {
-          duration: 5000,
-        }
       })
     })
   }
