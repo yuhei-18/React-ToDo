@@ -154,7 +154,7 @@ const Create: React.FC<PropsType> = (props: PropsType) => {
               }
             }}
             as={
-              <textarea rows={18} className={styles.input} />
+              <textarea rows={15} className={styles.input} />
             }
           />
           <div className={styles.error}>
