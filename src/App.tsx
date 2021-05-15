@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { Switch, Route, Redirect, Link } from 'react-router-dom';
-import { useQuery, gql } from '@apollo/client';
-import Card from "components/atoms/Card";
-import LeftMenu from "components/atoms/LeftMenu";
-import Contents from "components/atoms/Contants";
-import Header from "components/organisms/Header";
-import Detail from "components/pages/todos/Detail";
-import Create from "components/pages/todos/Create";
-import 'scss/_reset.scss';
-import styles from './styles.module.scss';
+import React, { useState } from 'react'
+import { Switch, Route, Redirect, Link } from 'react-router-dom'
+import { useQuery, gql } from '@apollo/client'
+import Card from 'components/atoms/Card'
+import LeftMenu from 'components/atoms/LeftMenu'
+import Contents from 'components/atoms/Contants'
+import Header from 'components/organisms/Header'
+import Detail from 'components/pages/todos/Detail'
+import Create from 'components/pages/todos/Create'
+import 'scss/_reset.scss'
+import styles from './styles.module.scss'
 
 const TODO_LIST = gql`
   query {
@@ -25,18 +25,18 @@ const TODO_LIST = gql`
       }
     }
   }
-`;
+`
 
 function App() {
-  const [todoId, setTodoId] = useState<number>(1);
-  const { loading, error, data, refetch } = useQuery(TODO_LIST);
+  const [todoId, setTodoId] = useState<number>(1)
+  const { loading, error, data, refetch } = useQuery(TODO_LIST)
 
   function refetchTodoList() {
-    refetch();
+    refetch()
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error</p>
 
   return (
     <>
@@ -71,15 +71,17 @@ function App() {
               </Route>
               <Route path="/todo/detail/:id">
                 <Detail
-                  todo={data.todo.nodes ? data.todo.nodes.find((todo: Api.Todo) => {
-                    return (todo.id === todoId);
-                  }) : undefined}
+                  todo={
+                    data.todo.nodes
+                      ? data.todo.nodes.find((todo: Api.Todo) => {
+                          return todo.id === todoId
+                        })
+                      : undefined
+                  }
                 />
               </Route>
               <Route path="/todo/create">
-                <Create
-                  refetch={refetchTodoList}
-                />
+                <Create refetch={refetchTodoList} />
               </Route>
             </Switch>
           </div>
@@ -89,4 +91,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

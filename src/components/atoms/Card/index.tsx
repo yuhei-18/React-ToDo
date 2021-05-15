@@ -1,25 +1,34 @@
-import React from 'react';
-import clsx from "clsx";
-import moment from 'moment';
-import styles from './styles.module.scss';
+import React from 'react'
+import clsx from 'clsx'
+import moment from 'moment'
+import styles from './styles.module.scss'
 
-const TITLE_MAX_LENGTH = 15;
-const CONTENT_MAX_LENGTH = 50;
+const TITLE_MAX_LENGTH = 15
+const CONTENT_MAX_LENGTH = 50
 
-type Ref = HTMLDivElement;
+type Ref = HTMLDivElement
 
 interface PropsType extends Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {
-  title?: string;
-  content?: string;
-  due_date?: Date;
-  priority?: 0 | 1 | 2 | 3;
-  is_done?: boolean;
-  choice?: boolean;
+  title?: string
+  content?: string
+  due_date?: Date
+  priority?: 0 | 1 | 2 | 3
+  is_done?: boolean
+  choice?: boolean
 }
 
 const Card = React.forwardRef<Ref, PropsType>((props, ref) => {
-  const { title, content, due_date, priority = 0, is_done, choice, className, ...rest } = props
-  const now = moment();
+  const {
+    title,
+    content,
+    due_date,
+    priority = 0,
+    is_done,
+    choice,
+    className,
+    ...rest
+  } = props
+  const now = moment()
 
   return (
     <div
@@ -37,25 +46,19 @@ const Card = React.forwardRef<Ref, PropsType>((props, ref) => {
     >
       <div className={styles.contents}>
         <h3 className={styles.title}>
-          {title && title.length > TITLE_MAX_LENGTH ? (
-            title.substr(0, TITLE_MAX_LENGTH) + "..."
-          ) : (
-            title
-          )}
+          {title && title.length > TITLE_MAX_LENGTH
+            ? title.substr(0, TITLE_MAX_LENGTH) + '...'
+            : title}
         </h3>
         <p className={styles.content}>
-          {content && content.length > CONTENT_MAX_LENGTH ? (
-            content.substr(0, CONTENT_MAX_LENGTH) + "..."
-          ) : (
-            content
-          )}
+          {content && content.length > CONTENT_MAX_LENGTH
+            ? content.substr(0, CONTENT_MAX_LENGTH) + '...'
+            : content}
         </p>
         <p
-          className={
-            clsx(styles.date, {
-              [styles.ago]: due_date && moment(due_date) < now
-            })
-          }
+          className={clsx(styles.date, {
+            [styles.ago]: due_date && moment(due_date) < now,
+          })}
         >
           {moment(due_date).fromNow()}
         </p>
@@ -64,4 +67,4 @@ const Card = React.forwardRef<Ref, PropsType>((props, ref) => {
   )
 })
 
-export default Card;
+export default Card

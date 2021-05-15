@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios'
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_SERVER_URL,
@@ -7,9 +7,9 @@ const instance = axios.create({
   },
   transformResponse: [
     (data: any) => {
-      return data ? JSON.parse(data) : {};
-    }
+      return data ? JSON.parse(data) : {}
+    },
   ],
-});
+})
 
-export default instance;
+export default instance
