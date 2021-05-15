@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { RiAddBoxLine } from 'react-icons/ri'
-import { RiDeleteBin6Line } from 'react-icons/ri'
+import { RiAddBoxLine, RiDeleteBin6Line } from 'react-icons/ri'
 import { BiEdit } from 'react-icons/bi'
 import styles from './styles.module.scss'
 

@@ -11,9 +11,9 @@ type Ref = HTMLDivElement
 interface PropsType extends Omit<React.HTMLProps<HTMLDivElement>, 'ref'> {
   title?: string
   content?: string
-  due_date?: Date
+  dueDate?: Date
   priority?: 0 | 1 | 2 | 3
-  is_done?: boolean
+  isDone?: boolean
   choice?: boolean
 }
 
@@ -21,22 +21,20 @@ const Card = React.forwardRef<Ref, PropsType>((props, ref) => {
   const {
     title,
     content,
-    due_date,
+    dueDate,
     priority = 0,
-    is_done,
+    isDone,
     choice,
     className,
-    ...rest
   } = props
   const now = moment()
 
   return (
     <div
-      {...rest}
       ref={ref}
       className={clsx(className, styles.card, {
-        [styles.done]: is_done === true,
-        [styles.not_done]: is_done === false,
+        [styles.done]: isDone === true,
+        [styles.not_done]: isDone === false,
         [styles.priority_high]: priority === 3,
         [styles.priority_medium]: priority === 2,
         [styles.priority_low]: priority === 1,
@@ -47,20 +45,20 @@ const Card = React.forwardRef<Ref, PropsType>((props, ref) => {
       <div className={styles.contents}>
         <h3 className={styles.title}>
           {title && title.length > TITLE_MAX_LENGTH
-            ? title.substr(0, TITLE_MAX_LENGTH) + '...'
+            ? `${title.substr(0, TITLE_MAX_LENGTH)}...`
             : title}
         </h3>
         <p className={styles.content}>
           {content && content.length > CONTENT_MAX_LENGTH
-            ? content.substr(0, CONTENT_MAX_LENGTH) + '...'
+            ? `${content.substr(0, CONTENT_MAX_LENGTH)}...`
             : content}
         </p>
         <p
           className={clsx(styles.date, {
-            [styles.ago]: due_date && moment(due_date) < now,
+            [styles.ago]: dueDate && moment(dueDate) < now,
           })}
         >
-          {moment(due_date).fromNow()}
+          {moment(dueDate).fromNow()}
         </p>
       </div>
     </div>

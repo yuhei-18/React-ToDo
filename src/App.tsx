@@ -53,8 +53,8 @@ function App() {
                 title={todo.title}
                 content={todo.content}
                 priority={todo.priority}
-                is_done={todo.isDone}
-                due_date={todo.dueDate}
+                isDone={todo.isDone}
+                dueDate={todo.dueDate}
                 choice={todo.id === todoId}
               />
             </Link>

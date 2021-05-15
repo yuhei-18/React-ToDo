@@ -4,9 +4,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import { ApolloProvider } from '@apollo/client/react'
 import './index.css'
+import ReactNotification from 'react-notifications-component'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 
 const client = new ApolloClient({

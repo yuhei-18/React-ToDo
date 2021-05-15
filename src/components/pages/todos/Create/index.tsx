@@ -136,7 +136,7 @@ const Create: React.FC<PropsType> = (props: PropsType) => {
               defaultValue=""
               as={
                 <select className={clsx(styles.input, styles.normal)}>
-                  <option value={0}>{''}</option>
+                  <option value={0}> </option>
                   <option value={1}>低</option>
                   <option value={2}>中</option>
                   <option value={3}>高</option>
