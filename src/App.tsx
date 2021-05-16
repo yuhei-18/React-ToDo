@@ -7,6 +7,7 @@ import Contents from 'components/atoms/Contants'
 import Header from 'components/organisms/Header'
 import Detail from 'components/pages/todos/Detail'
 import Create from 'components/pages/todos/Create'
+import Edit from 'components/pages/todos/Edit'
 import 'scss/_reset.scss'
 import styles from './styles.module.scss'
 
@@ -82,6 +83,18 @@ function App() {
               </Route>
               <Route path="/todo/create">
                 <Create refetch={refetchTodoList} />
+              </Route>
+              <Route path="/todo/edit">
+                <Edit
+                  refetch={refetchTodoList}
+                  todo={
+                    data.todo.nodes
+                      ? data.todo.nodes.find((todo: Api.Todo) => {
+                          return todo.id === todoId
+                        })
+                      : undefined
+                  }
+                />
               </Route>
             </Switch>
           </div>

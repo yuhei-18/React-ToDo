@@ -4,11 +4,11 @@ import { useMutation } from '@apollo/client'
 import gql from 'graphql-tag'
 import { ErrorMessage } from '@hookform/error-message'
 import clsx from 'clsx'
+import moment from 'moment'
 import Required from 'components/atoms/Required'
-import { Notification } from 'lib/notification'
 import styles from 'components/pages/todos/Create/styles.module.scss'
 
-const TODO_CREATE = gql`
+const TODO_UPDATE = gql`
   mutation todoCreate($input: TodoCreateInput!) {
     todoCreate(input: $input) {
       todo {
@@ -18,7 +18,7 @@ const TODO_CREATE = gql`
   }
 `
 
-type TodoCreateType = {
+type TodoEditType = {
   title: string
   content: string
   priority: number
@@ -27,58 +27,23 @@ type TodoCreateType = {
 
 type PropsType = {
   refetch: () => void
+  todo: Api.Todo
 }
 
-const Create: React.FC<PropsType> = (props: PropsType) => {
-  const { refetch } = props
-  const [createTodo] = useMutation(TODO_CREATE)
-  const { handleSubmit, control, errors, reset } = useForm<TodoCreateType>()
+const Edit: React.FC<PropsType> = (props: PropsType) => {
+  const { refetch, todo } = props
+  const [updateTodo] = useMutation(TODO_UPDATE)
+  const { handleSubmit, control, errors, reset } = useForm<TodoEditType>()
 
-  function TodoCreate(inputs: TodoCreateType) {
-    const reqInput = inputs
-
-    if (reqInput.due_date?.toString() === '') {
-      reqInput.due_date = null
-    }
-
-    createTodo({
-      variables: {
-        input: {
-          title: reqInput.title,
-          content: reqInput.content,
-          dueDate: reqInput.due_date,
-          priority: Number(reqInput.priority),
-        },
-      },
-    })
-      .then((res) => {
-        Notification({
-          title: 'SUCCESS',
-          message: `ToDo「${res.data.todoCreate.todo.title}」を作成しました。`,
-          type: 'success',
-        })
-
-        // フォームを空にする。
-        reset()
-
-        // Todo リストを再取得する。
-        refetch()
-      })
-      .catch((e) => {
-        console.error(e)
-        Notification({
-          title: 'Error',
-          message: `${e}`,
-          type: 'danger',
-        })
-      })
+  function TodoEdit(inputs: TodoEditType) {
+    console.log(inputs)
   }
 
   return (
     <div className={styles.create}>
-      <form onSubmit={handleSubmit(TodoCreate)}>
+      <form onSubmit={handleSubmit(TodoEdit)}>
         <div className={styles.head}>
-          <h1>ToDo Create</h1>
+          <h1>ToDo Edit</h1>
           <button type="submit" className={styles.submit}>
             Save
           </button>
@@ -93,7 +58,7 @@ const Create: React.FC<PropsType> = (props: PropsType) => {
             <Controller
               name="title"
               control={control}
-              defaultValue=""
+              defaultValue={todo?.title || ''}
               rules={{
                 required: 'タイトルの入力は必須です。',
                 maxLength: {
@@ -118,7 +83,7 @@ const Create: React.FC<PropsType> = (props: PropsType) => {
             <Controller
               name="due_date"
               control={control}
-              defaultValue=""
+              defaultValue={moment(todo?.dueDate).format('YYYY-MM-DD')}
               as={
                 <input
                   type="date"
@@ -133,7 +98,7 @@ const Create: React.FC<PropsType> = (props: PropsType) => {
             <Controller
               name="priority"
               control={control}
-              defaultValue=""
+              defaultValue={todo?.priority || ''}
               as={
                 <select className={clsx(styles.input, styles.normal)}>
                   <option value={0}> </option>
@@ -154,7 +119,7 @@ const Create: React.FC<PropsType> = (props: PropsType) => {
           <Controller
             name="content"
             control={control}
-            defaultValue=""
+            defaultValue={todo?.content || ''}
             rules={{
               required: '内容の入力は必須です。',
               maxLength: {
@@ -172,5 +137,4 @@ const Create: React.FC<PropsType> = (props: PropsType) => {
     </div>
   )
 }
-
-export default Create
+export default Edit

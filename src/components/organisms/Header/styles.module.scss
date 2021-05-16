@@ -9,27 +9,17 @@
   z-index: 20;
   display: flex;
   justify-content: space-between;
-}
 
-.icon {
-  margin: 10px 0 0 10px;
-  height: 30px;
-  width: 30px;
-  color: #444;
+  a {
+    text-decoration: none;
+  }
 
-  &:hover {
-    color: #666;
+  .flex {
+    display: flex;
+    justify-content: space-between;
   }
 }
 
-.delete_icon {
-  margin: 10px 10px 0 0;
-  height: 30px;
-  width: 30px;
-  color: #444;
-  z-index: 30;
-
-  &:hover {
-    color: #666;
-  }
+.delete_button {
+  margin-right: 10px;
 }
