@@ -50,12 +50,14 @@ const Detail: React.FC<PropsType> = (props) => {
               [styles.ago]: todo?.dueDate && moment(todo?.dueDate) < now,
             })}
           >
-            {moment(todo?.dueDate).format('ll')}
+            {todo?.dueDate !== null
+              ? moment(todo?.dueDate).format('ll')
+              : 'no limit'}
           </p>
         </div>
         <div className={styles.updated_at}>
           <MdUpdate className={styles.icon} />
-          <p>updated {moment(todo?.updated_at).fromNow()}</p>
+          <p>updated {moment(todo?.updatedAt).fromNow()}</p>
         </div>
       </div>
       <p className={styles.content}>{todo?.content}</p>

@@ -1,7 +1,7 @@
 declare namespace Api {
   type CommonDate = {
-    created_at: Date
-    updated_at: Date
+    createdAt: Date
+    updatedAt: Date
   }
 
   type Todo = CommonDate & {
