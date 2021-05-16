@@ -6,7 +6,7 @@ import { ErrorMessage } from '@hookform/error-message'
 import clsx from 'clsx'
 import moment from 'moment'
 import Required from 'components/atoms/Required'
-import styles from 'components/pages/todos/Create/styles.module.scss'
+import styles from 'components/pages/todos/Edit/styles.module.scss'
 
 const TODO_UPDATE = gql`
   mutation todoCreate($input: TodoCreateInput!) {
@@ -37,6 +37,18 @@ const Edit: React.FC<PropsType> = (props: PropsType) => {
 
   function TodoEdit(inputs: TodoEditType) {
     console.log(inputs)
+  }
+
+  if (!todo) {
+    return (
+      <div className={styles.todos}>
+        <h3 className={clsx(styles.title, styles.todo_none)}>
+          左の Todo リストを選択してくだい。
+          <br />
+          または、左上のアイコンから Todo を作成してください。
+        </h3>
+      </div>
+    )
   }
 
   return (
