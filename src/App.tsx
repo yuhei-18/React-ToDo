@@ -42,6 +42,8 @@ function App() {
   return (
     <>
       <div className={styles.app}>
+        <Header />
+
         <LeftMenu>
           {data.todo.nodes?.map((todo: Api.Todo) => (
             <Link
@@ -63,41 +65,37 @@ function App() {
         </LeftMenu>
 
         <Contents>
-          <Header />
-
-          <div className={styles.position}>
-            <Switch>
-              <Route path="/" exact>
-                <Redirect to={`/todo/detail/${todoId}`} />
-              </Route>
-              <Route path="/todo/detail/:id">
-                <Detail
-                  todo={
-                    data.todo.nodes
-                      ? data.todo.nodes.find((todo: Api.Todo) => {
-                          return todo.id === todoId
-                        })
-                      : undefined
-                  }
-                />
-              </Route>
-              <Route path="/todo/create">
-                <Create refetch={refetchTodoList} />
-              </Route>
-              <Route path="/todo/edit">
-                <Edit
-                  refetch={refetchTodoList}
-                  todo={
-                    data.todo.nodes
-                      ? data.todo.nodes.find((todo: Api.Todo) => {
-                          return todo.id === todoId
-                        })
-                      : undefined
-                  }
-                />
-              </Route>
-            </Switch>
-          </div>
+          <Switch>
+            <Route path="/" exact>
+              <Redirect to={`/todo/detail/${todoId}`} />
+            </Route>
+            <Route path="/todo/detail/:id">
+              <Detail
+                todo={
+                  data.todo.nodes
+                    ? data.todo.nodes.find((todo: Api.Todo) => {
+                        return todo.id === todoId
+                      })
+                    : undefined
+                }
+              />
+            </Route>
+            <Route path="/todo/create">
+              <Create refetch={refetchTodoList} />
+            </Route>
+            <Route path="/todo/edit">
+              <Edit
+                refetch={refetchTodoList}
+                todo={
+                  data.todo.nodes
+                    ? data.todo.nodes.find((todo: Api.Todo) => {
+                        return todo.id === todoId
+                      })
+                    : undefined
+                }
+              />
+            </Route>
+          </Switch>
         </Contents>
       </div>
     </>

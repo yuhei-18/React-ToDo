@@ -2,7 +2,7 @@
 
 .header {
   height: 50px;
-  width: 75%;
+  width: 25%;
   border-bottom: solid 2px #181818;
   background-color: $color-background;
   position: fixed;
@@ -12,11 +12,6 @@
 
   a {
     text-decoration: none;
-  }
-
-  .flex {
-    display: flex;
-    justify-content: space-between;
   }
 }
 

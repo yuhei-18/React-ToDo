@@ -6,13 +6,23 @@ import { ErrorMessage } from '@hookform/error-message'
 import clsx from 'clsx'
 import moment from 'moment'
 import Required from 'components/atoms/Required'
+import { Notification } from 'lib/notification'
 import styles from 'components/pages/todos/Edit/styles.module.scss'
 
 const TODO_UPDATE = gql`
-  mutation todoCreate($input: TodoCreateInput!) {
-    todoCreate(input: $input) {
+  mutation TodoUpdate($input: TodoUpdateInput!) {
+    todoUpdate(input: $input) {
       todo {
+        id
         title
+        content
+        priority
+        isDone
+      }
+      todoErrors {
+        code
+        field
+        message
       }
     }
   }
@@ -33,22 +43,44 @@ type PropsType = {
 const Edit: React.FC<PropsType> = (props: PropsType) => {
   const { refetch, todo } = props
   const [updateTodo] = useMutation(TODO_UPDATE)
-  const { handleSubmit, control, errors, reset } = useForm<TodoEditType>()
+  const { handleSubmit, control, errors } = useForm<TodoEditType>()
 
   function TodoEdit(inputs: TodoEditType) {
-    console.log(inputs)
-  }
+    const reqInput = inputs
 
-  if (!todo) {
-    return (
-      <div className={styles.todos}>
-        <h3 className={clsx(styles.title, styles.todo_none)}>
-          左の Todo リストを選択してくだい。
-          <br />
-          または、左上のアイコンから Todo を作成してください。
-        </h3>
-      </div>
-    )
+    if (reqInput.due_date?.toString() === '') {
+      reqInput.due_date = null
+    }
+
+    updateTodo({
+      variables: {
+        input: {
+          id: Number(todo.id),
+          title: reqInput.title,
+          content: reqInput.content,
+          dueDate: reqInput.due_date,
+          priority: Number(reqInput.priority),
+        },
+      },
+    })
+      .then((res) => {
+        Notification({
+          title: 'SUCCESS',
+          message: `ToDo「${res.data.todoUpdate.todo.title}」を更新しました。`,
+          type: 'success',
+        })
+
+        // Todo リストを再取得する。
+        refetch()
+      })
+      .catch((e) => {
+        console.error(e)
+        Notification({
+          title: 'Error',
+          message: `${e}`,
+          type: 'danger',
+        })
+      })
   }
 
   return (
@@ -139,7 +171,7 @@ const Edit: React.FC<PropsType> = (props: PropsType) => {
                 message: '内容の文字数を少なくしてください。',
               },
             }}
-            as={<textarea rows={16} className={styles.input} />}
+            as={<textarea rows={18} className={styles.input} />}
           />
           <div className={styles.error}>
             <ErrorMessage name="content" errors={errors} />

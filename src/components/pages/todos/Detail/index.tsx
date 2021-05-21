@@ -1,8 +1,12 @@
 import React from 'react'
 import moment from 'moment'
 import clsx from 'clsx'
+import { Link } from 'react-router-dom'
 import { MdUpdate, MdDateRange } from 'react-icons/md'
 import { BsFillExclamationDiamondFill } from 'react-icons/bs'
+import { BiEdit } from 'react-icons/bi'
+import { RiDeleteBin6Line } from 'react-icons/ri'
+import IconButton from 'components/atoms/IconButton'
 import styles from 'components/pages/todos/Detail/styles.module.scss'
 
 interface PropsType {
@@ -27,41 +31,58 @@ const Detail: React.FC<PropsType> = (props) => {
   }
 
   return (
-    <div className={styles.todos}>
-      <h1 className={styles.title}>{todo?.title}</h1>
-      <div className={styles.todo_info}>
-        <div className={styles.priority}>
-          <BsFillExclamationDiamondFill className={styles.icon} />
-          <p
-            className={clsx({
-              [styles.priority_high]: todo?.priority === 3,
-              [styles.priority_medium]: todo?.priority === 2,
-              [styles.priority_low]: todo?.priority === 1,
-              [styles.priority_none]: todo?.priority === 0,
-            })}
-          >
-            {priority[todo?.priority ? todo?.priority : 0]}
-          </p>
-        </div>
-        <div className={styles.due_date}>
-          <MdDateRange className={styles.icon} />
-          <p
-            className={clsx({
-              [styles.ago]: todo?.dueDate && moment(todo?.dueDate) < now,
-            })}
-          >
-            {todo?.dueDate !== null
-              ? moment(todo?.dueDate).format('ll')
-              : 'no limit'}
-          </p>
-        </div>
-        <div className={styles.updated_at}>
-          <MdUpdate className={styles.icon} />
-          <p>updated {moment(todo?.updatedAt).fromNow()}</p>
-        </div>
+    <>
+      <div className={styles.button_area}>
+        <Link to="/todo/edit">
+          <IconButton title="Edit">
+            <BiEdit />
+          </IconButton>
+        </Link>
+
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a className={styles.delete_button} href="#">
+          <IconButton title="Delete">
+            <RiDeleteBin6Line />
+          </IconButton>
+        </a>
       </div>
-      <p className={styles.content}>{todo?.content}</p>
-    </div>
+
+      <div className={styles.todos}>
+        <div className={styles.todo_info}>
+          <div className={styles.due_date}>
+            <MdDateRange className={styles.icon} />
+            <p
+              className={clsx({
+                [styles.ago]: todo?.dueDate && moment(todo?.dueDate) < now,
+              })}
+            >
+              {todo?.dueDate !== null
+                ? moment(todo?.dueDate).format('YYYY MM DD')
+                : 'no limit'}
+            </p>
+          </div>
+          <div className={styles.priority}>
+            <BsFillExclamationDiamondFill className={styles.icon} />
+            <p
+              className={clsx({
+                [styles.priority_high]: todo?.priority === 3,
+                [styles.priority_medium]: todo?.priority === 2,
+                [styles.priority_low]: todo?.priority === 1,
+                [styles.priority_none]: todo?.priority === 0,
+              })}
+            >
+              {priority[todo?.priority ? todo?.priority : 0]}
+            </p>
+          </div>
+          <div className={styles.updated_at}>
+            <MdUpdate className={styles.icon} />
+            <p>updated {moment(todo?.updatedAt).fromNow()}</p>
+          </div>
+        </div>
+        <h1 className={styles.title}>{todo?.title}</h1>
+        <p className={styles.content}>{todo?.content}</p>
+      </div>
+    </>
   )
 }
 

@@ -162,7 +162,7 @@ const Create: React.FC<PropsType> = (props: PropsType) => {
                 message: '内容の文字数を少なくしてください。',
               },
             }}
-            as={<textarea rows={16} className={styles.input} />}
+            as={<textarea rows={18} className={styles.input} />}
           />
           <div className={styles.error}>
             <ErrorMessage name="content" errors={errors} />
