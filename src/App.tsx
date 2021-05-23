@@ -71,6 +71,7 @@ function App() {
             </Route>
             <Route path="/todo/detail/:id">
               <Detail
+                refetch={refetchTodoList}
                 todo={
                   data.todo.nodes
                     ? data.todo.nodes.find((todo: Api.Todo) => {

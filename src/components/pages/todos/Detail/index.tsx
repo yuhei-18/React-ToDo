@@ -2,21 +2,67 @@ import React from 'react'
 import moment from 'moment'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
+import { useMutation } from '@apollo/client'
+import gql from 'graphql-tag'
 import { MdUpdate, MdDateRange } from 'react-icons/md'
 import { BsFillExclamationDiamondFill } from 'react-icons/bs'
 import { BiEdit } from 'react-icons/bi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import IconButton from 'components/atoms/IconButton'
+import { Notification } from 'lib/notification'
 import styles from 'components/pages/todos/Detail/styles.module.scss'
 
+const TODO_DELETE = gql`
+  mutation TodoDelete($input: TodoDeleteInput!) {
+    todoDelete(input: $input) {
+      deletedTodoId
+      todoErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`
+
 interface PropsType {
+  refetch: () => void
   todo?: Api.Todo
 }
 
 const Detail: React.FC<PropsType> = (props) => {
-  const { todo } = props
+  const { refetch, todo } = props
+  const [todoDelete] = useMutation(TODO_DELETE)
   const priority = ['None', 'Low', 'Medium', 'High']
   const now = moment()
+
+  function TodoDelete(id: number) {
+    todoDelete({
+      variables: {
+        input: {
+          id,
+        },
+      },
+    })
+      .then(() => {
+        Notification({
+          title: 'SUCCESS',
+          message: `ToDo「${todo?.title}」を削除しました。`,
+          type: 'success',
+        })
+
+        // Todo リストを再取得する。
+        refetch()
+      })
+      .catch((e) => {
+        console.error(e)
+        Notification({
+          title: 'Error',
+          message: `${e}`,
+          type: 'danger',
+        })
+      })
+  }
 
   if (!todo) {
     return (
@@ -40,7 +86,11 @@ const Detail: React.FC<PropsType> = (props) => {
         </Link>
 
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a className={styles.delete_button} href="#">
+        <a
+          className={styles.delete_button}
+          onClick={() => TodoDelete(todo?.id)}
+          href="#"
+        >
           <IconButton title="Delete">
             <RiDeleteBin6Line />
           </IconButton>
@@ -57,7 +107,7 @@ const Detail: React.FC<PropsType> = (props) => {
               })}
             >
               {todo?.dueDate !== null
-                ? moment(todo?.dueDate).format('YYYY MM DD')
+                ? moment(todo?.dueDate).format('YYYY-MM-DD')
                 : 'no limit'}
             </p>
           </div>
